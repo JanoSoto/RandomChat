@@ -1,0 +1,15 @@
+{
+  "name": "RandomChat",
+  "version": "1.0.0",
+  "description": "Un chat con camara web y audio. Laboratorio 1 Sistemas Distribuidos",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Soto",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.9.5",
+    "socket.io": "^1.1.0"
+  }
+}
