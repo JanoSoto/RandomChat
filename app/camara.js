@@ -6,8 +6,13 @@ var App = {};
 
 App.camara = function (){
 	var video = window.stream;
-	navigator.getUserMedia('audio, video', function(stream){
+
+	navigator.getUserMedia({video: 1}, function (stream){
 		video.src = URL.createObjectURL(stream);
 		
-	})
-}
+	}, function (error){
+		console.log('Error' + error);
+	});
+};
+
+App.camara();
