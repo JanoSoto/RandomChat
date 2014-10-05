@@ -1,1 +1,18 @@
 @import url("bootstrap/css/bootstrap.css");
+
+#video{
+	height: 30em;
+}
+
+#conversacion{
+	height: 30em;
+	overflow: scroll;
+}
+
+#streamLocal{
+	height: 14em;
+}
+
+#streamRemoto{
+	height: 14em;
+}

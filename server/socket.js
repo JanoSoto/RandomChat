@@ -6,6 +6,12 @@ module.exports = function (server){
 	var usersConectados = [];
 	var usersEnEspera = [];
 
+	function estableceConexion(){
+		if(usersEnEspera.length >= 2){
+			
+		}
+	}
+
 	webSocket.on('connection', function (socket){
 		socket.emit('ready');
 		socket.on('video', function (video){

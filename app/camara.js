@@ -31,11 +31,11 @@ function registraUsuario(){
 		else if(username){
 			console.log("Se aprieta el boton");
 			document.querySelector("#inicioSesion").className = "hide";
-			document.querySelector("#chat").className = "";
+			document.querySelector("#chat").className = "col-md-12";
 			App.socket.emit('new_user', username);
+			App.camara();
 		}
 	}
 }
 
 registraUsuario();
-//App.camara();

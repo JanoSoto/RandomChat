@@ -6,17 +6,30 @@
 	</head>
 	<body>
 		<div class="container">
-			<h1>Random Chat</h1>
-			<div id="inicioSesion">
-				<p>Ingrese su nombre de usuario</p>
+			<h1 class="col-md-4 col-md-offset-4">Random Chat</h1>
+			<div id="inicioSesion" class="col-md-4 col-md-offset-4">
+				<label for="username">Ingrese su nombre de usuario</label>
 				<input type="text" id="username">
 				<p id="respuestaUser"></p>
 				<button id="btnSession">Ingresar</button>
 			</div>
 			<div id="chat" class="hide">
-				<video id="streamLocal" autoplay></video>
-				<video id="streamRemoto" autoplay></video>
-				<span id="msge"></span>
+				<div id="msge"></div>
+				<div id="video" class="well col-md-8">
+					<div class="media">
+						<video id="streamRemoto" autoplay class="col-md-12"></video>
+					</div>
+					<div class="media">
+						<video id="streamLocal" autoplay></video>
+					</div>
+				</div>
+				<div id="conversacion" class=" well col-md-4"></div>
+				<div id="chat" class="col-md-12">
+					<span class="col-md-11">
+						<input type="text" id="escritura" class="form-control" placeholder="Escriba aqu&iacute su mensaje...">
+					</span>
+					<button id="enviarMensaje">Enviar</button>
+				</div>
 			</div>
 		</div>
 		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
