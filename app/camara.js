@@ -15,7 +15,7 @@ App.camara = function (){
 	navigator.getUserMedia({video: true, audio: true}, function (stream, urlVideoLocal){
 		urlVideoLocal = URL.createObjectURL(stream);
 		video.src = urlVideoLocal;
-		//App.socket.emit('video', video);
+		App.socket.emit('envio_video', urlVideoLocal, document.getElementById("username").value);
 	}, function (error){
 		console.log('Error: ' + error);
 	});
@@ -33,20 +33,13 @@ App.socket.on('no_users', function (){
 	msje.textContent = "No hay mas usuarios conectados, espere a que ingrese alguien más...";
 });
 
-App.socket.on('send_id', function (user, video_src){
-	console.log('soy '+ document.getElementById("username").value + ' y llega el id '+user+' con video '+video_src);
-	App.socket.emit('establece_conexion', user, video_src);
-	//videoRemoto.src = video_src;
-	//App.socket.to(user_id).emit('video', video);
-	//App.socket.join(''+user_id);
-	//App.socket.in(user_id).emit('video', video);
-	//App.socket.emit('add_room', user);
-	//idRemoto = user;
-	//io.sockets.socket(user).emit('establece_conexion', )
+App.socket.on('send_id', function (user){
+	console.log('soy '+ document.getElementById("username").value + ' y llega el id '+user);
+	App.socket.emit('establece_conexion', user);
 });
 
-App.socket.on('conexion_ready', function (user, video){
-	console.log('soy '+ document.getElementById("username").value + ' y llega el id '+user.id+' con video '+video);
+App.socket.on('conexion_ready', function (user){
+	console.log('soy '+ document.getElementById("username").value + ' y llega el id '+user.id);
 });
 
 App.socket.on('video', function (video){
@@ -65,6 +58,11 @@ App.socket.on('recibe_msje', function (msje, username){
 	document.querySelector('#conversacion').appendChild(etiquetaMsje);
 });
 
+App.socket.on('recibe_video', function (stream){
+	videoRemoto.src = stream;
+	//console.log('Stream de datos?: '+stream);
+});
+
 function registraUsuario(){
 	
 	var btnSession = document.querySelector("#btnSession").onclick = function (){
@@ -77,7 +75,8 @@ function registraUsuario(){
 			document.querySelector("#inicioSesion").className = "hide";
 			document.querySelector("#chat").className = "col-md-12";
 			//console.log('Enviando src video: '+urlVideoLocal);
-			App.socket.emit('new_user', username, App.camara());
+			App.socket.emit('new_user', username);
+			App.camara();
 		}
 	}
 }
@@ -94,6 +93,7 @@ document.querySelector("#enviarMensaje").onclick = function (){
 		var etiquetaMsje = document.createElement('p');
 		etiquetaMsje.textContent = username + ' dice: ' + msjeTxt;
 		document.querySelector('#conversacion').appendChild(etiquetaMsje);
+		document.querySelector('#escritura').focus();
 	}
 }
 

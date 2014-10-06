@@ -6,19 +6,23 @@ module.exports = function (server){
 	var usersConectados = [];
 	var usersEnEspera = [];
 
-	//var io = require('socket.io').listen(server);
-
 	webSocket.on('connection', function (socket){
-	//io.sockets.on('connection', function (socket){
 		socket.emit('ready');
 
-		/*
-		socket.on('video', function (video){
-				
+		socket.on('envio_video', function (stream, username){
+			for (i=0; i<usersConectados.length; i++){
+				if(usersConectados[i].user1.username == username){
+					socket.to(usersConectados[i].user2.id).emit('recibe_video', stream);
+					console.log('user1 enviando video al user2');
+				}
+				else if(usersConectados[i].user2.username == username){
+					socket.to(usersConectados[i].user1.id).emit('recibe_video', stream);
+					console.log('user2 enviando video al user1');
+				}
+			}
 		});
-		*/
 
-		socket.on('new_user', function(username, video_src){
+		socket.on('new_user', function(username){
 			user = {
 				id: socket.id,
 				username: username
@@ -35,12 +39,9 @@ module.exports = function (server){
 				var user1 = usersEnEspera.shift();
 				var user2 = usersEnEspera.shift();
 
-				//socket.join(user1.id)
-
 				usersConectados.push({user1: user1, user2: user2});
 
-				socket.to(user1.id).emit('send_id', user2.id, video_src);
-				//socket.to(user2.id).emit('send_id', user1.id, video_src);
+				socket.to(user1.id).emit('send_id', user2.id);
 
 			}
 			else{
@@ -48,11 +49,11 @@ module.exports = function (server){
 			}
 		});
 
-		socket.on('establece_conexion', function (user, video){
+		socket.on('establece_conexion', function (user){
 			console.log('Se establece la conexion.');
 			for (i=0; i<usersConectados.length; i++){
 				if(usersConectados[i].user2.id == user){
-					socket.to(user).emit('conexion_ready', usersConectados[i].user1, video);
+					socket.to(user).emit('conexion_ready', usersConectados[i].user1);
 				}
 			}
 		});

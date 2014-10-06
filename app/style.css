@@ -6,7 +6,8 @@
 
 #conversacion{
 	height: 30em;
-	overflow: scroll;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 #streamLocal{
